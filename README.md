@@ -19,10 +19,7 @@ A simple and user-friendly Study Planner web application designed to help studen
 ## 🚀 Getting Started
 
 ### 1. Clone the repository
-
-```bash
-git clone YOUR_REPOSITORY_URL
-```
+https://github.com/thriveni-sa/Study-planner.git
 
 ### 2. Open the project
 
