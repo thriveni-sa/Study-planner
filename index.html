@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Study Planner</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            📚 Study Planner
+        </div>
+
+        <nav>
+
+            <a href="#" onclick="showSection('dashboard')">
+                🏠 Dashboard
+            </a>
+
+            <a href="#" onclick="showSection('tasks')">
+                ✅ Tasks
+            </a>
+
+            <a href="#" onclick="showSection('schedule')">
+                📅 Schedule
+            </a>
+
+            <a href="#" onclick="showSection('progress')">
+                📊 Progress
+            </a>
+
+            <a href="#" onclick="showSection('settings')">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+        <!-- DASHBOARD -->
+
+        <section id="dashboard">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Good Morning 👋
+                    </h1>
+
+                    <p id="currentDate"></p>
+
+                    <p>
+                        Let's make today productive!
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STAT CARDS -->
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <h3>
+                        Today's Tasks
+                    </h3>
+
+                    <p id="totalCount">
+                        0
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Completed
+                    </h3>
+
+                    <p id="completedCount">
+                        0
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Study Hours
+                    </h3>
+
+                    <p id="studyHours">
+                        0 hrs
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Progress
+                    </h3>
+
+                    <p id="dashboardProgress">
+                        0%
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK STUDY HOURS -->
+
+            <div class="box">
+
+                <h2>
+                    ⏱️ Study Hours
+                </h2>
+
+                <p>
+                    Record your study hours for today.
+                </p>
+
+                <div class="input-row">
+
+                    <input
+                        type="number"
+                        id="studyHoursInput"
+                        placeholder="Hours"
+                        min="0"
+                        step="0.5"
+                    >
+
+                    <button onclick="saveStudyHours()">
+                        Save Hours
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TODAY -->
+
+            <div class="box">
+
+                <div class="section-title">
+
+                    <h2>
+                        📋 Today's Tasks
+                    </h2>
+
+                    <button
+                        onclick="showSection('tasks')"
+                    >
+                        View All
+                    </button>
+
+                </div>
+
+                <div id="todayTasks">
+                    No tasks for today.
+                </div>
+
+            </div>
+
+
+            <!-- UPCOMING -->
+
+            <div class="box">
+
+                <h2>
+                    📅 Upcoming Tasks
+                </h2>
+
+                <div id="upcomingTasks">
+                    No upcoming tasks.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TASKS -->
+
+        <section
+            id="tasks"
+            style="display:none;"
+        >
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        ✅ Tasks
+                    </h1>
+
+                    <p>
+                        Manage your study tasks and deadlines.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ADD TASK -->
+
+            <div class="box">
+
+                <h2>
+                    ➕ Add New Task
+                </h2>
+
+                <div class="task-form">
+
+                    <input
+                        type="text"
+                        id="taskInput"
+                        placeholder="Enter task"
+                    >
+
+                    <select id="priority">
+
+                        <option value="Low">
+                            Low Priority
+                        </option>
+
+                        <option value="Medium">
+                            Medium Priority
+                        </option>
+
+                        <option value="High">
+                            High Priority
+                        </option>
+
+                    </select>
+
+                    <input
+                        type="date"
+                        id="dueDate"
+                    >
+
+                    <button onclick="addTask()">
+                        Add Task
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+
+            <div class="filters">
+
+                <button onclick="filterTasks('all')">
+                    All
+                </button>
+
+                <button onclick="filterTasks('pending')">
+                    Pending
+                </button>
+
+                <button onclick="filterTasks('completed')">
+                    Completed
+                </button>
+
+                <button onclick="filterTasks('overdue')">
+                    🔴 Overdue
+                </button>
+
+                <button onclick="filterTasks('today')">
+                    🟡 Today
+                </button>
+
+                <button onclick="filterTasks('upcoming')">
+                    🟢 Upcoming
+                </button>
+
+            </div>
+
+
+            <div id="taskList"></div>
+
+        </section>
+
+
+        <!-- SCHEDULE -->
+
+        <section
+            id="schedule"
+            style="display:none;"
+        >
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        📅 Schedule
+                    </h1>
+
+                    <p>
+                        Plan your study sessions.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ADD SESSION -->
+
+            <div class="box">
+
+                <h2>
+                    ➕ Add Study Session
+                </h2>
+
+                <div class="schedule-form">
+
+                    <input
+                        type="text"
+                        id="sessionSubject"
+                        placeholder="Subject / Topic"
+                    >
+
+                    <input
+                        type="date"
+                        id="sessionDate"
+                    >
+
+                    <input
+                        type="time"
+                        id="sessionStart"
+                    >
+
+                    <input
+                        type="time"
+                        id="sessionEnd"
+                    >
+
+                    <button onclick="addSession()">
+                        Add Session
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <h2>
+                    📚 My Schedule
+                </h2>
+
+                <div id="scheduleList">
+                    No study sessions.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROGRESS -->
+
+        <section
+            id="progress"
+            style="display:none;"
+        >
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        📊 Progress
+                    </h1>
+
+                    <p>
+                        Track your study performance.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <h3>
+                        Total Tasks
+                    </h3>
+
+                    <p id="progressTotal">
+                        0
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Completed
+                    </h3>
+
+                    <p id="progressCompleted">
+                        0
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Pending
+                    </h3>
+
+                    <p id="progressPending">
+                        0
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Completion
+                    </h3>
+
+                    <p id="progressPercentage">
+                        0%
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROGRESS BAR -->
+
+            <div class="box">
+
+                <h2>
+                    Overall Progress
+                </h2>
+
+                <div class="progress-bar">
+
+                    <div
+                        id="progressBar"
+                    ></div>
+
+                </div>
+
+                <p id="progressMessage">
+                    Start completing your tasks! 💪
+                </p>
+
+            </div>
+
+
+            <!-- WEEKLY HOURS -->
+
+            <div class="box">
+
+                <h2>
+                    📈 Weekly Study Statistics
+                </h2>
+
+                <div id="weeklyStats">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SETTINGS -->
+
+        <section
+            id="settings"
+            style="display:none;"
+        >
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        ⚙️ Settings
+                    </h1>
+
+                    <p>
+                        Customize your Study Planner.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <h2>
+                    Appearance
+                </h2>
+
+                <button onclick="toggleDarkMode()">
+                    🌙 Toggle Dark Mode
+                </button>
+
+            </div>
+
+
+            <div class="box">
+
+                <h2>
+                    Data
+                </h2>
+
+                <p>
+                    Delete all tasks, schedules and study hours.
+                </p>
+
+                <button
+                    class="danger"
+                    onclick="clearAllData()"
+                >
+                    🗑️ Clear All Data
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
